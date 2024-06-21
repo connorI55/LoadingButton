@@ -17,7 +17,24 @@
       <domain></domain>
       -->
     </external-service-usage>
-    <!-- property node identifies a specific, configurable piece of data that the control expects from CDS -->
+    <!-- input properties -->
+    <property name="Text" display-name-key="Text" description-key="Button text" of-type="SingleLine.Text" usage="input" required="false"/>
+    <property name="Delay" display-name-key="Delay" description-key="Timer delay in seconds" of-type="FP" usage="input" required="true" default-value="5"/>
+    <property name="ButtonStyle" display-name-key="Button Style" description-key="Button style" of-type="Enum" usage="input" required="true" default-value="contained">
+      <value name="Text" display-name-key="Lighter">text</value>
+      <value name="Outlined" display-name-key="Normal">outlined</value>
+      <value name="Contained" display-name-key="Semibold">contained</value>
+    </property>
+    <property name="ButtonSize" display-name-key="Button Size" description-key="Button size" of-type="Enum" usage="input" required="true" default-value="large">
+      <value name="Small" display-name-key="Lighter">small</value>
+      <value name="Medium" display-name-key="Normal">medium</value>
+      <value name="Large" display-name-key="Semibold">large</value>
+    </property>
+    <property name="IconPosition" display-name-key="Icon Position" description-key="Icon position" of-type="Enum" usage="input" required="true" default-value="start">
+      <value name="Start" display-name-key="Lighter">start</value>
+      <value name="End" display-name-key="Normal">end</value>
+    </property>
+    <property name="BorderRadius" display-name-key="Border Radius" description-key="Button border radius" of-type="FP" usage="input" required="false"/>
 
     <!-- theme properties -->
     <property name="Font" display-name-key="Font" description-key="Font" of-type="SingleLine.Text" usage="input" required="false"/>
@@ -27,7 +44,7 @@
       <value name="Lighter" display-name-key="Lighter">Lighter</value>
       <value name="Normal" display-name-key="Normal">Normal</value>
       <value name="Semibold" display-name-key="Semibold">Semibold</value>
-       <value name="Bold" display-name-key="Bold">Bold</value>
+      <value name="Bold" display-name-key="Bold">Bold</value>
     </property>
     <property name="PrimaryColor" display-name-key="Primary Color" description-key="Primary color" of-type="SingleLine.Text" usage="input" required="false"/>
     <!--
@@ -41,6 +58,14 @@
       </type-group>
       <property name="sampleProperty" display-name-key="Property_Display_Key" description-key="Property_Desc_Key" of-type-group="numbers" usage="bound" required="true" />
     -->
+
+    <!-- output properties -->
+    <property name="State" display-name-key="State" description-key="Button state" of-type="Enum" usage="output">
+      <value name="Ready" display-name-key="true">ready</value>
+      <value name="Wait" display-name-key="false">wait</value>
+      <value name="Submit" display-name-key="false">submit</value>
+    </property>
+    
     <resources>
       <code path="index.ts" order="1"/>
       <platform-library name="React" version="16.8.6" />

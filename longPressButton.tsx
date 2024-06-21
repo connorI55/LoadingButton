@@ -19,6 +19,7 @@ export interface IButtonProps {
     iconPosition: "start" | "end",
     appTheme: ComponentFramework.Theme,
     isEnabled: boolean,
+    borderRadius?: number,
     font?: string,
     fontSize?: number,
     fontColor?: string,
@@ -26,7 +27,8 @@ export interface IButtonProps {
     primaryColor?: string,
     focus?: boolean,
     containerHeight?: number,
-    containerWidth?: number
+    containerWidth?: number,
+    onChange: (newValue: "ready" | "wait" | "submit") => void;
   }
 
 const LongPressButton: React.FC<IButtonProps> = (props) => {
@@ -36,13 +38,15 @@ const LongPressButton: React.FC<IButtonProps> = (props) => {
     const [isComplete, setIsComplete] = React.useState(false);
     const handleClick = () => {
         setIsPressed(true);
+        props.onChange("wait")
     };
     const handleIconClick = () => {
         setIsPressed(false);
+        props.onChange("ready")
     };
     const onComplete = () => {
         setIsComplete(true);
-        // You can also add any other state changes or actions here
+        props.onChange("submit")
     };
     const key = React.useMemo(() => Utils.generateGUID(), []);
 
@@ -52,14 +56,19 @@ const LongPressButton: React.FC<IButtonProps> = (props) => {
             main: Utils.handleDefault(props.primaryColor) || props.appTheme?.colorBrandForeground1 || "#0078d4",
           },
         },
-        typography: {
-          fontFamily: Utils.handleDefault(props.font) || props.appTheme?.fontFamilyBase || "Segoe UI",
-          body1: {
-            fontSize: props.fontSize || props.appTheme?.fontSizeBase300 || 14,
-            fontWeight: Utils.mapFontWeight(props.fontWeight, props) || props.appTheme?.fontWeightRegular || "Normal",
-            color: props.fontColor || "",
+        components: {
+            MuiButton: {
+              styleOverrides: {
+                root: {
+                    fontSize: props.fontSize || props.appTheme?.fontSizeBase300 || 14,
+                    fontWeight: Utils.mapFontWeight(props.fontWeight, props) || props.appTheme?.fontWeightRegular || "Normal",
+                    color: props.fontColor || "",
+                    fontFamily: Utils.handleDefault(props.font) || props.appTheme?.fontFamilyBase || "Segoe UI",
+                    borderRadius: props.borderRadius || 5,
+                },
+              },
+            },
           },
-        }
       });
 
     //const for timer props
@@ -94,7 +103,7 @@ const LongPressButton: React.FC<IButtonProps> = (props) => {
                 </Zoom>
                 <Zoom in={isComplete}>
                     <Box sx={{ position: 'absolute' }}>
-                        <CheckCircleIcon key={key + "-Icon"} sx={{ fontSize: "40px", cursor: 'pointer', color: theme.palette.primary.main }} />
+                        <CheckCircleIcon key={key + "-Icon"} sx={{ fontSize: (props.fontSize ?? 0) * 2, cursor: 'pointer', color: theme.palette.primary.main }} />
                     </Box>
                 </Zoom>
             </Box>

@@ -6,7 +6,7 @@ import * as React from "react";
 export class LoadingButton implements ComponentFramework.ReactControl<IInputs, IOutputs> {
     private theComponent: ComponentFramework.ReactControl<IInputs, IOutputs>;
     private notifyOutputChanged: () => void;
-    // private checkboxValue: boolean;
+    private controlState: "ready" | "wait" | "cancel" | "submit";
     // private autoHeight: number;
     // private autoWidth: number;
 
@@ -18,12 +18,14 @@ export class LoadingButton implements ComponentFramework.ReactControl<IInputs, I
         // this.handleAutoSizing = this.handleAutoSizing.bind(this);
         // this.autoHeight=0;
         // this.autoWidth=0;
+        this.controlState = "ready";
     }
 
-    onChange(newValue: boolean): void {
+    onChange(newValue: "ready" | "wait" | "submit"): void {
         // console.log("onChange called");
         // this.checkboxValue = newValue;
-        // this.notifyOutputChanged();
+        this.controlState = newValue;
+        this.notifyOutputChanged();
     }
 
     handleAutoSizing(height: number, width: number) {
@@ -31,7 +33,7 @@ export class LoadingButton implements ComponentFramework.ReactControl<IInputs, I
         // this.autoHeight = height;
         // this.autoWidth = width;
         // console.log("Handle Auto Sizing Called: Height: " + this.autoHeight + " Width: " + this.autoWidth);
-        // this.notifyOutputChanged()
+        this.notifyOutputChanged()
 
     }
 
@@ -62,20 +64,22 @@ export class LoadingButton implements ComponentFramework.ReactControl<IInputs, I
         const appTheme = context.fluentDesignLanguage?.tokenTheme
         const props: IButtonProps = 
             { 
-                buttonText: "Press me",
-                buttonStyle: "contained",
-                buttonSize: "large",
-                cancelSeconds: 5,
-                iconPosition: "end",
+                buttonText: inputs.Text.raw as string,
+                buttonStyle: inputs.ButtonStyle.raw,
+                buttonSize: inputs.ButtonSize.raw,
+                cancelSeconds: inputs.Delay.raw as number,
+                iconPosition: inputs.IconPosition.raw,
                 appTheme: appTheme,
                 isEnabled: context.mode.isControlDisabled,
+                borderRadius: inputs.BorderRadius.raw as number,
                 font: inputs.Font?.raw as string,
                 fontSize: inputs.FontSize.raw as number,
                 fontWeight: inputs.FontWeight.raw,
                 fontColor: inputs.FontColor?.raw as string,
                 primaryColor: inputs.PrimaryColor?.raw as string,
                 containerHeight: context.mode.allocatedHeight,
-                containerWidth: context.mode.allocatedWidth
+                containerWidth: context.mode.allocatedWidth,
+                onChange: this.onChange,
             };
         return React.createElement(
             MUI_LoadingButton_Class, props
@@ -87,7 +91,9 @@ export class LoadingButton implements ComponentFramework.ReactControl<IInputs, I
      * @returns an object based on nomenclature defined in manifest, expecting object[s] for property marked as "bound" or "output"
      */
     public getOutputs(): IOutputs {
-        return { };
+        return { 
+            State: this.controlState
+        };
     }
 
     /**

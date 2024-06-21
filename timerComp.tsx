@@ -11,14 +11,15 @@ export interface timerProps {
     icon?: React.ReactNode;
     onClick: () => void; 
     onComplete: () => void;
+    fontSize?: number;
   }
 
-  const TimerComp: React.FC<timerProps> = ({ active, cancelSeconds, icon, onClick, onComplete}) => {
-    const cancelInterval = 100/cancelSeconds;
+  const TimerComp: React.FC<timerProps> = (props) => {
+    const cancelInterval = 100/props.cancelSeconds;
     const [progress, setProgress] = React.useState(cancelInterval);
     const handleClick = () => {
         setProgress(0);
-        onClick();
+        props.onClick();
     }
     const key = React.useMemo(() => Utils.generateGUID(), []);
     const theme = useTheme();
@@ -26,11 +27,11 @@ export interface timerProps {
     React.useEffect(() => {
         let timer: NodeJS.Timeout;
 
-        if (active) {
+        if (props.active) {
             timer = setInterval(() => {
                 setProgress((prevProgress) => {
                     if (prevProgress >= 100) {
-                        onComplete();
+                        props.onComplete();
                         clearInterval(timer);
                         return 0;
                     } else {
@@ -44,14 +45,14 @@ export interface timerProps {
             clearInterval(timer);
             setProgress(cancelInterval)
         };
-    }, [active, onComplete]);
+    }, [props.active, props.onComplete]);
   
 
     return (
         <Box key={key} sx={{ position: 'relative', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
             <CircularProgress variant="determinate" value={progress} />
             <Box sx={{ position: 'absolute', height:"100%", top: '50%', left: '50%', transform: 'translate(-50%, -50%)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                {icon || <CloseIcon sx={{ fontSize: 24, cursor: 'pointer' }}  onClick={handleClick}  />} {/* Adjust the fontSize to fit the CircularProgress */}
+                {props.icon || <CloseIcon sx={{ fontSize: props.fontSize, cursor: 'pointer' }}  onClick={handleClick}  />} {/* Adjust the fontSize to fit the CircularProgress */}
             </Box>
         </Box>
     );
