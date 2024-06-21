@@ -1,16 +1,11 @@
 import * as React from 'react';
-import { Label } from '@fluentui/react';
+import LongPressButton, {IButtonProps} from './longPressButton';
 
-export interface iInputs {
-  name?: string;
-}
-
-export class App extends React.Component<iInputs> {
+export default class MUI_LoadingButton_Class extends React.Component<IButtonProps> {
   public render(): React.ReactNode {
+    const props = this.props;
     return (
-      <Label>
-        {this.props.name}
-      </Label>
+      <LongPressButton {...props} />
     )
   }
 }

@@ -4,8 +4,11 @@
 
 // Define IInputs and IOutputs Type. They should match with ControlManifest.
 export interface IInputs {
-    sampleProperty: ComponentFramework.PropertyTypes.StringProperty;
+    Font: ComponentFramework.PropertyTypes.StringProperty;
+    FontSize: ComponentFramework.PropertyTypes.WholeNumberProperty;
+    FontColor: ComponentFramework.PropertyTypes.StringProperty;
+    FontWeight: ComponentFramework.PropertyTypes.EnumProperty<"Lighter" | "Normal" | "Semibold" | "Bold">;
+    PrimaryColor: ComponentFramework.PropertyTypes.StringProperty;
 }
 export interface IOutputs {
-    sampleProperty?: string;
 }

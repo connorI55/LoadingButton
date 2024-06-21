@@ -18,7 +18,18 @@
       -->
     </external-service-usage>
     <!-- property node identifies a specific, configurable piece of data that the control expects from CDS -->
-    <property name="sampleProperty" display-name-key="Property_Display_Key" description-key="Property_Desc_Key" of-type="SingleLine.Text" usage="bound" required="true" />
+
+    <!-- theme properties -->
+    <property name="Font" display-name-key="Font" description-key="Font" of-type="SingleLine.Text" usage="input" required="false"/>
+    <property name="FontSize" display-name-key="Font Size" description-key="Font" of-type="Whole.None" usage="input" required="false"/>
+    <property name="FontColor" display-name-key="Font Color" description-key="Font color" of-type="SingleLine.Text" usage="input" required="false"/>
+    <property name="FontWeight" display-name-key="Font Weight" description-key="Font weight" of-type="Enum" usage="input" required="false">
+      <value name="Lighter" display-name-key="Lighter">Lighter</value>
+      <value name="Normal" display-name-key="Normal">Normal</value>
+      <value name="Semibold" display-name-key="Semibold">Semibold</value>
+       <value name="Bold" display-name-key="Bold">Bold</value>
+    </property>
+    <property name="PrimaryColor" display-name-key="Primary Color" description-key="Primary color" of-type="SingleLine.Text" usage="input" required="false"/>
     <!--
       Property node's of-type attribute can be of-type-group attribute.
       Example:
@@ -33,7 +44,7 @@
     <resources>
       <code path="index.ts" order="1"/>
       <platform-library name="React" version="16.8.6" />
-      <platform-library name="Fluent" version="8.29.0" />
+      <!-- <platform-library name="Fluent" version="8.29.0" /> -->
       <!-- UNCOMMENT TO ADD MORE RESOURCES
       <css path="css/LoadingButton.css" order="1" />
       <resx path="strings/LoadingButton.1033.resx" version="1.0.0" />

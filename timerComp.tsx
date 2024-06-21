@@ -1,8 +1,8 @@
 import React from 'react';
-import './App.css';
 import CircularProgress from '@mui/material/CircularProgress';
 import CloseIcon from '@mui/icons-material/Close'; 
-import { Box } from '@mui/material';
+import { Box, useTheme  } from '@mui/material';
+import * as Utils from '../../MUI Controls/utils'
 
 
 export interface timerProps {
@@ -20,6 +20,8 @@ export interface timerProps {
         setProgress(0);
         onClick();
     }
+    const key = React.useMemo(() => Utils.generateGUID(), []);
+    const theme = useTheme();
   
     React.useEffect(() => {
         let timer: NodeJS.Timeout;
@@ -44,8 +46,9 @@ export interface timerProps {
         };
     }, [active, onComplete]);
   
+
     return (
-        <Box sx={{ position: 'relative', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
+        <Box key={key} sx={{ position: 'relative', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
             <CircularProgress variant="determinate" value={progress} />
             <Box sx={{ position: 'absolute', height:"100%", top: '50%', left: '50%', transform: 'translate(-50%, -50%)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 {icon || <CloseIcon sx={{ fontSize: 24, cursor: 'pointer' }}  onClick={handleClick}  />} {/* Adjust the fontSize to fit the CircularProgress */}

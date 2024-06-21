@@ -1,15 +1,39 @@
 import { IInputs, IOutputs } from "./generated/ManifestTypes";
-import { App, iInputs } from "./App";
+import MUI_LoadingButton_Class from "./App";
+import {IButtonProps} from "./longPressButton";
 import * as React from "react";
 
 export class LoadingButton implements ComponentFramework.ReactControl<IInputs, IOutputs> {
     private theComponent: ComponentFramework.ReactControl<IInputs, IOutputs>;
     private notifyOutputChanged: () => void;
+    // private checkboxValue: boolean;
+    // private autoHeight: number;
+    // private autoWidth: number;
 
     /**
      * Empty constructor.
      */
-    constructor() { }
+    constructor() {
+        // this.onChange = this.onChange.bind(this);
+        // this.handleAutoSizing = this.handleAutoSizing.bind(this);
+        // this.autoHeight=0;
+        // this.autoWidth=0;
+    }
+
+    onChange(newValue: boolean): void {
+        // console.log("onChange called");
+        // this.checkboxValue = newValue;
+        // this.notifyOutputChanged();
+    }
+
+    handleAutoSizing(height: number, width: number) {
+        
+        // this.autoHeight = height;
+        // this.autoWidth = width;
+        // console.log("Handle Auto Sizing Called: Height: " + this.autoHeight + " Width: " + this.autoWidth);
+        // this.notifyOutputChanged()
+
+    }
 
     /**
      * Used to initialize the control instance. Controls can kick off remote server calls and other initialization actions here.
@@ -24,6 +48,7 @@ export class LoadingButton implements ComponentFramework.ReactControl<IInputs, I
         state: ComponentFramework.Dictionary
     ): void {
         this.notifyOutputChanged = notifyOutputChanged;
+        context.mode.trackContainerResize(true);
     }
 
     /**
@@ -32,9 +57,28 @@ export class LoadingButton implements ComponentFramework.ReactControl<IInputs, I
      * @returns ReactElement root react element for the control
      */
     public updateView(context: ComponentFramework.Context<IInputs>): React.ReactElement {
-        const props: iInputs = { name: 'Hello, World!' };
+        console.log("updateView called");
+        const inputs = context.parameters
+        const appTheme = context.fluentDesignLanguage?.tokenTheme
+        const props: IButtonProps = 
+            { 
+                buttonText: "Press me",
+                buttonStyle: "contained",
+                buttonSize: "large",
+                cancelSeconds: 5,
+                iconPosition: "end",
+                appTheme: appTheme,
+                isEnabled: context.mode.isControlDisabled,
+                font: inputs.Font?.raw as string,
+                fontSize: inputs.FontSize.raw as number,
+                fontWeight: inputs.FontWeight.raw,
+                fontColor: inputs.FontColor?.raw as string,
+                primaryColor: inputs.PrimaryColor?.raw as string,
+                containerHeight: context.mode.allocatedHeight,
+                containerWidth: context.mode.allocatedWidth
+            };
         return React.createElement(
-            App, props
+            MUI_LoadingButton_Class, props
         );
     }
 
