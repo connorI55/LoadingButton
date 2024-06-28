@@ -18,21 +18,21 @@
       -->
     </external-service-usage>
     <!-- input properties -->
-    <property name="Text" display-name-key="Text" description-key="Button text" of-type="SingleLine.Text" usage="input" required="false"/>
+    <property name="Text" display-name-key="Text" description-key="Button text" of-type="SingleLine.Text" usage="input" required="false" default-value="Press Me"/>
     <property name="Delay" display-name-key="Delay" description-key="Timer delay in seconds" of-type="FP" usage="input" required="true" default-value="5"/>
     <property name="ButtonStyle" display-name-key="Button Style" description-key="Button style" of-type="Enum" usage="input" required="true" default-value="contained">
-      <value name="Text" display-name-key="Lighter">text</value>
-      <value name="Outlined" display-name-key="Normal">outlined</value>
-      <value name="Contained" display-name-key="Semibold">contained</value>
+      <value name="Text" display-name-key="Text">text</value>
+      <value name="Outlined" display-name-key="Outlined">outlined</value>
+      <value name="Contained" display-name-key="Contained">contained</value>
     </property>
     <property name="ButtonSize" display-name-key="Button Size" description-key="Button size" of-type="Enum" usage="input" required="true" default-value="large">
-      <value name="Small" display-name-key="Lighter">small</value>
-      <value name="Medium" display-name-key="Normal">medium</value>
-      <value name="Large" display-name-key="Semibold">large</value>
+      <value name="Small" display-name-key="Small">small</value>
+      <value name="Medium" display-name-key="Medium">medium</value>
+      <value name="Large" display-name-key="Large">large</value>
     </property>
     <property name="IconPosition" display-name-key="Icon Position" description-key="Icon position" of-type="Enum" usage="input" required="true" default-value="start">
-      <value name="Start" display-name-key="Lighter">start</value>
-      <value name="End" display-name-key="Normal">end</value>
+      <value name="Start" display-name-key="Start">start</value>
+      <value name="End" display-name-key="End">end</value>
     </property>
     <property name="BorderRadius" display-name-key="Border Radius" description-key="Button border radius" of-type="FP" usage="input" required="false"/>
 

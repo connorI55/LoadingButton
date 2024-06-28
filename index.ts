@@ -14,7 +14,7 @@ export class LoadingButton implements ComponentFramework.ReactControl<IInputs, I
      * Empty constructor.
      */
     constructor() {
-        // this.onChange = this.onChange.bind(this);
+        this.onChange = this.onChange.bind(this);
         // this.handleAutoSizing = this.handleAutoSizing.bind(this);
         // this.autoHeight=0;
         // this.autoWidth=0;
@@ -91,6 +91,7 @@ export class LoadingButton implements ComponentFramework.ReactControl<IInputs, I
      * @returns an object based on nomenclature defined in manifest, expecting object[s] for property marked as "bound" or "output"
      */
     public getOutputs(): IOutputs {
+        console.log("set Output: " + this.controlState)
         return { 
             State: this.controlState
         };

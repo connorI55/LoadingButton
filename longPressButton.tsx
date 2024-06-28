@@ -26,8 +26,8 @@ export interface IButtonProps {
     fontWeight?: "Lighter" | "Normal" | "Semibold" | "Bold",
     primaryColor?: string,
     focus?: boolean,
-    containerHeight?: number,
-    containerWidth?: number,
+    containerHeight: number,
+    containerWidth: number,
     onChange: (newValue: "ready" | "wait" | "submit") => void;
   }
 
@@ -68,6 +68,14 @@ const LongPressButton: React.FC<IButtonProps> = (props) => {
                 },
               },
             },
+            MuiCircularProgress: {
+              styleOverrides: {
+                root: {
+                  height: props.containerHeight + "px",
+                  width: props.containerHeight + "px",
+                },
+              },
+            },
           },
       });
 
@@ -76,13 +84,25 @@ const LongPressButton: React.FC<IButtonProps> = (props) => {
         active: isPressed,
         cancelSeconds: props.cancelSeconds,
         icon: props.icon,
+        containerHeight: props.containerHeight,
+        containerWidth: props.containerWidth,
         onClick: handleIconClick,
-        onComplete: onComplete
+        onComplete: onComplete,
+        theme: theme,
     };
 
+    console.log(isComplete)
     return (
         <ThemeProvider theme={theme} key={key}>
-            <Box sx={{ position: 'relative', display: 'flex', justifyContent: 'center', alignItems: 'center', width: props.containerWidth+"px", height: props.containerHeight+"px" }}>
+            <Box sx={
+                { position: 'relative', 
+                    display: 'flex', 
+                    justifyContent: 'center', 
+                    alignItems: 'center', 
+                    width: props.containerWidth+"px", 
+                    height: props.containerHeight+"px" 
+
+                }}>
                 <Zoom in={!isPressed}>
                     <Box key={key + "-Button"} sx={{ position: 'absolute' }}>
                         <Button 
@@ -103,7 +123,12 @@ const LongPressButton: React.FC<IButtonProps> = (props) => {
                 </Zoom>
                 <Zoom in={isComplete}>
                     <Box sx={{ position: 'absolute' }}>
-                        <CheckCircleIcon key={key + "-Icon"} sx={{ fontSize: (props.fontSize ?? 0) * 2, cursor: 'pointer', color: theme.palette.primary.main }} />
+                        <CheckCircleIcon key={key + "-Icon"} sx={{ 
+                            fontSize: props.fontSize || props.appTheme?.fontSizeBase300 || 14,
+                            height: props.containerHeight*.6 + "px",
+                            width: props.containerHeight*.6 + "px",
+                            cursor: 'pointer', 
+                            color: theme.palette.primary.main }} />
                     </Box>
                 </Zoom>
             </Box>

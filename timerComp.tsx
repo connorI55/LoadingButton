@@ -1,7 +1,7 @@
 import React from 'react';
 import CircularProgress from '@mui/material/CircularProgress';
 import CloseIcon from '@mui/icons-material/Close'; 
-import { Box, useTheme  } from '@mui/material';
+import { Theme, Box, useTheme, ThemeProvider  } from '@mui/material';
 import * as Utils from '../../MUI Controls/utils'
 
 
@@ -12,6 +12,9 @@ export interface timerProps {
     onClick: () => void; 
     onComplete: () => void;
     fontSize?: number;
+    containerHeight: number;
+    containerWidth: number;
+    theme: Theme;
   }
 
   const TimerComp: React.FC<timerProps> = (props) => {
@@ -22,7 +25,6 @@ export interface timerProps {
         props.onClick();
     }
     const key = React.useMemo(() => Utils.generateGUID(), []);
-    const theme = useTheme();
   
     React.useEffect(() => {
         let timer: NodeJS.Timeout;
@@ -31,8 +33,8 @@ export interface timerProps {
             timer = setInterval(() => {
                 setProgress((prevProgress) => {
                     if (prevProgress >= 100) {
-                        props.onComplete();
                         clearInterval(timer);
+                        setProgress(0);
                         return 0;
                     } else {
                         return prevProgress + cancelInterval;
@@ -43,18 +45,42 @@ export interface timerProps {
 
         return () => {
             clearInterval(timer);
-            setProgress(cancelInterval)
+            setProgress(cancelInterval);
         };
-    }, [props.active, props.onComplete]);
+    }, [props.active]);
+
+    React.useEffect(() => {
+        if (progress >= 100) {
+            props.onComplete();
+        }
+    }, [progress, props]);
   
 
     return (
-        <Box key={key} sx={{ position: 'relative', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
-            <CircularProgress variant="determinate" value={progress} />
-            <Box sx={{ position: 'absolute', height:"100%", top: '50%', left: '50%', transform: 'translate(-50%, -50%)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                {props.icon || <CloseIcon sx={{ fontSize: props.fontSize, cursor: 'pointer' }}  onClick={handleClick}  />} {/* Adjust the fontSize to fit the CircularProgress */}
+        <ThemeProvider theme={props.theme}>
+        <Box key={key} sx={{ 
+            position: 'relative', 
+            display: 'inline-flex', 
+            alignItems: 'center', 
+            justifyContent: 'center',
+        }}>
+            <CircularProgress variant="determinate" value={progress}/>
+            <Box sx={{ 
+                position: 'absolute',
+                 height:"100%", 
+                 top: '50%', 
+                 left: '50%', 
+                 transform: 'translate(-50%, -50%)', 
+                 display: 'flex', 
+                 alignItems: 'center', 
+                 justifyContent: 'center' }}>
+                {props.icon || <CloseIcon sx={{ 
+                    fontSize: props.fontSize, 
+                    cursor: 'pointer' }}  
+                    onClick={handleClick}  />} {/* Adjust the fontSize to fit the CircularProgress */}
             </Box>
         </Box>
+        </ThemeProvider>
     );
   }
 
