@@ -20,6 +20,10 @@
     <!-- input properties -->
     <property name="Text" display-name-key="Text" description-key="Button text" of-type="SingleLine.Text" usage="input" required="false" default-value="Press Me"/>
     <property name="Delay" display-name-key="Delay" description-key="Timer delay in seconds" of-type="FP" usage="input" required="true" default-value="5"/>
+      <property name="Reset" display-name-key="Reset" description-key="Reset control" of-type="TwoOptions" usage="input" required="true" default-value="false">
+      <value name="True" display-name-key="True">true</value>
+      <value name="False" display-name-key="False">false</value>
+    </property>
     <property name="ButtonStyle" display-name-key="Button Style" description-key="Button style" of-type="Enum" usage="input" required="true" default-value="contained">
       <value name="Text" display-name-key="Text">text</value>
       <value name="Outlined" display-name-key="Outlined">outlined</value>

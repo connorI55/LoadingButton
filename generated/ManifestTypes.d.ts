@@ -6,6 +6,7 @@
 export interface IInputs {
     Text: ComponentFramework.PropertyTypes.StringProperty;
     Delay: ComponentFramework.PropertyTypes.FloatingNumberProperty;
+    Reset: ComponentFramework.PropertyTypes.TwoOptionsProperty;
     ButtonStyle: ComponentFramework.PropertyTypes.EnumProperty<"text" | "outlined" | "contained">;
     ButtonSize: ComponentFramework.PropertyTypes.EnumProperty<"small" | "medium" | "large">;
     IconPosition: ComponentFramework.PropertyTypes.EnumProperty<"start" | "end">;

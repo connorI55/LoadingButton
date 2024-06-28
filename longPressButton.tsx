@@ -29,6 +29,7 @@ export interface IButtonProps {
     containerHeight: number,
     containerWidth: number,
     onChange: (newValue: "ready" | "wait" | "submit") => void;
+    reset: boolean;
   }
 
 const LongPressButton: React.FC<IButtonProps> = (props) => {
@@ -48,6 +49,18 @@ const LongPressButton: React.FC<IButtonProps> = (props) => {
         setIsComplete(true);
         props.onChange("submit")
     };
+    const handleReset = () => {
+        setIsPressed(false);
+        setIsComplete(false);
+        props.onChange("ready")
+    }
+
+    React.useEffect(() => {
+        if (props.reset) {
+            handleReset();
+        }
+    }, [props.reset]);
+
     const key = React.useMemo(() => Utils.generateGUID(), []);
 
     const theme = createTheme({
@@ -91,7 +104,8 @@ const LongPressButton: React.FC<IButtonProps> = (props) => {
         theme: theme,
     };
 
-    console.log(isComplete)
+    
+
     return (
         <ThemeProvider theme={theme} key={key}>
             <Box sx={

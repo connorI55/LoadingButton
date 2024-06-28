@@ -80,6 +80,7 @@ export class LoadingButton implements ComponentFramework.ReactControl<IInputs, I
                 containerHeight: context.mode.allocatedHeight,
                 containerWidth: context.mode.allocatedWidth,
                 onChange: this.onChange,
+                reset: inputs.Reset.raw,
             };
         return React.createElement(
             MUI_LoadingButton_Class, props
